@@ -1,52 +1,47 @@
 package productsstore.demo.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import productsstore.demo.entities.Product;
 import productsstore.demo.services.base.ProductsService;
+import productsstore.demo.utils.base.LoggerProvider;
 
-import java.util.List;
-
-@RestController
+@Controller
+@RequestMapping("/products")
 public class ProductsController {
-
     private final ProductsService productsService;
+    private final LoggerProvider<ProductsController> logger;
 
     @Autowired
-    public ProductsController(ProductsService productsService) {
+    public ProductsController(ProductsService productsService,
+                              LoggerProvider<ProductsController> logger) {
         this.productsService = productsService;
+        this.logger = logger;
+        this.logger.setClass(ProductsController.class);
     }
 
-//    @RequestMapping("/products")
-//    public List<Product> getProducts() {
-//        return productsService.getAllProducts();
-//    }
+    @GetMapping("/{id}")
+    public String details(@PathVariable String id, Model model) {
+        logger.info("In product details");
 
-    @RequestMapping(value = "/products")
+        Product product = productsService.getProductById(Integer.parseInt(id));
+        model.addAttribute("product", product);
 
-    public List<Product> getProductsByCategory(
-        @RequestParam(required = false) String category,
-        @RequestParam(required = false) String page) {
-        if (category == null) {
-            if (page == null) {
-                return productsService.getAllProducts();
-            } else {
-                return productsService.getAllProductsByPage(Integer.parseInt(page));
-            }
-        } else {
-            if (page == null) {
-                return productsService.getProductsByCategory(category);
-            } else {
-                return productsService.getProductsByCategoryAndPage(category, Integer.parseInt(page));
-            }
-        }
+        return "products/details";
     }
 
-    @RequestMapping("/products/{id}")
-    public Product getProductDetails(@PathVariable String id) {
-        return productsService.getProductById(Integer.parseInt(id));
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("product", new Product());
+        return "products/create";
     }
+
+    @PostMapping("/create")
+    public String create(@RequestBody Product product) {
+
+        return "index";
+    }
+
 }

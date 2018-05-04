@@ -14,4 +14,6 @@ public interface ProductsService {
     List<Product> getAllProductsByPage(int pageNumber);
 
     List<Product> getProductsByCategoryAndPage(String category, int pageNumber);
+
+    void createProduct(Product product);
 }

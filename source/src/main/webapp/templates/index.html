@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+<header>
+    <h1>Products Store</h1>
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/products/create">Create</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<p th:text="${message}"></p>
+<ul>
+    <li th:each="product: ${products}">
+        <a th:href="@{'/products/' + ${product.getId()}}" th:text="${product.name}"></a>
+    </li>
+</ul>
+</body>
+</html>

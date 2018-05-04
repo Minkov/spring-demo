@@ -1,5 +1,6 @@
 package productsstore.demo.services;
 
+import org.springframework.beans.InvalidPropertyException;
 import org.springframework.stereotype.Service;
 import productsstore.demo.entities.Product;
 import productsstore.demo.repositories.base.GenericRepository;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 public class HibernateProductsService implements ProductsService {
 
     private static final int PAGE_SIZE = 10;
+    private static final int PRODUCT_NAME_MIN_LENGTH = 4;
     private final GenericRepository<Product> productsRepository;
 
     public HibernateProductsService(GenericRepository<Product> productsRepository) {
@@ -41,6 +43,9 @@ public class HibernateProductsService implements ProductsService {
         return productsRepository.getById(id);
     }
 
+    // page: 2, max: 2
+    // page: 2, max: 1
+
     @Override
     public List<Product> getAllProductsByPage(int pageNumber) {
         int fromIndex = pageNumber * PAGE_SIZE;
@@ -56,5 +61,14 @@ public class HibernateProductsService implements ProductsService {
 
         return getProductsByCategory(category)
             .subList(fromIndex, toIndex);
+    }
+
+    @Override
+    public void createProduct(Product product) {
+        if (product.getName().length() < PRODUCT_NAME_MIN_LENGTH) {
+            throw new InvalidPropertyException(Product.class, "name", "Invalid length");
+        }
+
+
     }
 }

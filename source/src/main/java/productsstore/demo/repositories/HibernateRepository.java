@@ -39,7 +39,19 @@ public class HibernateRepository<T extends Entity> implements GenericRepository<
 
     @Override
     public T getById(int id) {
-        return null;
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        CriteriaQuery<T> criteriaQuery = builder.createQuery(getEntityClass());
+
+        T entity = session.get(getEntityClass(), id);
+
+        transaction.commit();
+        session.close();
+
+        return entity;
     }
 
     @Override

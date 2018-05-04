@@ -1,4 +1,4 @@
-package productsstore.demo;
+package productsstore.demo.config;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
