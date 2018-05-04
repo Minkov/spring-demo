@@ -1,6 +1,8 @@
 package productsstore.demo.entities.base;
 
-public interface Entity {
+import java.io.Serializable;
+
+public interface ModelEntity extends Serializable {
     int getId();
 
     void setId(int id);

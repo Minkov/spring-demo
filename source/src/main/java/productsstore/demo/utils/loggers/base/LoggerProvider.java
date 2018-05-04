@@ -1,4 +1,4 @@
-package productsstore.demo.utils.base;
+package productsstore.demo.utils.loggers.base;
 
 public interface LoggerProvider<T> {
     void info(Object message);

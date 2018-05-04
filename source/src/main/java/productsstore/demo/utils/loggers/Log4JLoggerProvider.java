@@ -1,8 +1,8 @@
-package productsstore.demo.utils;
+package productsstore.demo.utils.loggers;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
-import productsstore.demo.utils.base.LoggerProvider;
+import productsstore.demo.utils.loggers.base.LoggerProvider;
 
 @Component
 public class Log4JLoggerProvider<T> implements LoggerProvider<T> {

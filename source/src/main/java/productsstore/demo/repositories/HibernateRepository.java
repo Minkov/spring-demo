@@ -3,14 +3,14 @@ package productsstore.demo.repositories;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import productsstore.demo.entities.base.Entity;
+import productsstore.demo.entities.base.ModelEntity;
 import productsstore.demo.repositories.base.GenericRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
-public class HibernateRepository<T extends Entity> implements GenericRepository<T> {
+public class HibernateRepository<T extends ModelEntity> implements GenericRepository<T> {
     private final SessionFactory sessionFactory;
     private Class<T> entityClass;
 
@@ -56,7 +56,15 @@ public class HibernateRepository<T extends Entity> implements GenericRepository<
 
     @Override
     public T create(T entity) {
-        return null;
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        session
+            .save(entity);
+
+        transaction.commit();
+        session.close();
+        return entity;
     }
 
     public Class<T> getEntityClass() {

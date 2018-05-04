@@ -2,6 +2,7 @@ package productsstore.demo.services.base;
 
 import productsstore.demo.entities.Product;
 
+import java.io.InvalidObjectException;
 import java.util.List;
 
 public interface ProductsService {
@@ -15,5 +16,5 @@ public interface ProductsService {
 
     List<Product> getProductsByCategoryAndPage(String category, int pageNumber);
 
-    void createProduct(Product product);
+    void createProduct(Product product) throws InvalidObjectException;
 }

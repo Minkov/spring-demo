@@ -1,23 +1,25 @@
 package productsstore.demo.services;
 
-import org.springframework.beans.InvalidPropertyException;
 import org.springframework.stereotype.Service;
 import productsstore.demo.entities.Product;
 import productsstore.demo.repositories.base.GenericRepository;
 import productsstore.demo.services.base.ProductsService;
+import productsstore.demo.utils.validators.base.Validator;
 
+import java.io.InvalidObjectException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class HibernateProductsService implements ProductsService {
-
+public class ProductsServiceImpl implements ProductsService {
     private static final int PAGE_SIZE = 10;
     private static final int PRODUCT_NAME_MIN_LENGTH = 4;
     private final GenericRepository<Product> productsRepository;
+    private final Validator<Product> productValidator;
 
-    public HibernateProductsService(GenericRepository<Product> productsRepository) {
+    public ProductsServiceImpl(GenericRepository<Product> productsRepository, Validator<Product> productValidator) {
         this.productsRepository = productsRepository;
+        this.productValidator = productValidator;
     }
 
     @Override
@@ -64,11 +66,11 @@ public class HibernateProductsService implements ProductsService {
     }
 
     @Override
-    public void createProduct(Product product) {
-        if (product.getName().length() < PRODUCT_NAME_MIN_LENGTH) {
-            throw new InvalidPropertyException(Product.class, "name", "Invalid length");
+    public void createProduct(Product product) throws InvalidObjectException {
+        if (!productValidator.isValid(product)) {
+            throw new InvalidObjectException("Invalid product");
         }
 
-
+        productsRepository.create(product);
     }
 }

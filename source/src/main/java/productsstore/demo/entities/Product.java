@@ -1,6 +1,6 @@
 package productsstore.demo.entities;
 
-import productsstore.demo.entities.Category;
+import productsstore.demo.entities.base.ModelEntity;
 
 import javax.persistence.*;
 import java.text.MessageFormat;
@@ -10,12 +10,13 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "products")
-public class Product implements productsstore.demo.entities.base.Entity {
+public class Product implements ModelEntity {
     int id;
     String name;
     float price;
     int quantity;
     private Set<Category> categories;
+    private User user;
 
     public Product() {
 
@@ -30,7 +31,7 @@ public class Product implements productsstore.demo.entities.base.Entity {
         setName(name);
         setPrice(price);
         setQuantity(quantity);
-        setCategories(new HashSet<Category>());
+        setCategories(new HashSet<>());
     }
 
     @Id
@@ -71,6 +72,16 @@ public class Product implements productsstore.demo.entities.base.Entity {
         this.quantity = quantity;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return MessageFormat.format(
@@ -86,11 +97,6 @@ public class Product implements productsstore.demo.entities.base.Entity {
         );
     }
 
-//    public void addCategory(String categoryName) {
-//        getCategories()
-//            .add(categoryName);
-//    }
-
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
         name = "products_categories",
@@ -104,17 +110,4 @@ public class Product implements productsstore.demo.entities.base.Entity {
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
-
-
-//    public void setCategories(ArrayList<String> categories) {
-//        this.categories = categories;
-//    }
-//
-//    public List<String> getCategories() {
-//        return categories;
-//    }
-//
-//    public void setCategories(List<String> categories) {
-//        this.categories = categories;
-//    }
 }

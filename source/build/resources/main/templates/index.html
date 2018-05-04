@@ -8,6 +8,7 @@
 </head>
 <body>
 <header>
+    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
     <h1>Products Store</h1>
     <nav>
         <ul>
@@ -25,6 +26,8 @@
 <ul>
     <li th:each="product: ${products}">
         <a th:href="@{'/products/' + ${product.getId()}}" th:text="${product.name}"></a>
+        , by
+        <a th:href="@{'/users/' + ${product.getUser().getUsername()}}" th:text="${product.getUser().getUsername()}"></a>
     </li>
 </ul>
 </body>

@@ -1,13 +1,12 @@
 package productsstore.demo.repositories;
 
-import org.springframework.stereotype.Repository;
-import productsstore.demo.entities.base.Entity;
+import productsstore.demo.entities.base.ModelEntity;
 import productsstore.demo.repositories.base.GenericRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InMemoryRepository<T extends Entity> implements GenericRepository<T> {
+public class InMemoryRepository<T extends ModelEntity> implements GenericRepository<T> {
     private List<T> entities;
 
     public InMemoryRepository() {

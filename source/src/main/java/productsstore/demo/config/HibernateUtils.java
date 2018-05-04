@@ -5,6 +5,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import productsstore.demo.entities.Category;
 import productsstore.demo.entities.Product;
+import productsstore.demo.entities.User;
 
 public class HibernateUtils {
     static SessionFactory sessionFactory;
@@ -15,6 +16,7 @@ public class HibernateUtils {
 
         configuration.addAnnotatedClass(Product.class);
         configuration.addAnnotatedClass(Category.class);
+        configuration.addAnnotatedClass(User.class);
 
         StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
 

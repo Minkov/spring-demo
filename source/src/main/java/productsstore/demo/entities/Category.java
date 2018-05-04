@@ -1,11 +1,13 @@
 package productsstore.demo.entities;
 
+import productsstore.demo.entities.base.ModelEntity;
+
 import javax.persistence.*;
 import java.text.MessageFormat;
 
 @Entity
 @Table(name = "categories")
-public class Category implements productsstore.demo.entities.base.Entity {
+public class Category implements ModelEntity {
     private int id;
     private String name;
 

@@ -34,7 +34,7 @@ public class HibernateProductsServiceTests {
             }
         };
 
-        HibernateProductsService service = new HibernateProductsService(repo);
+        ProductsServiceImpl service = new ProductsServiceImpl(repo);
 
         // Act
 
@@ -73,7 +73,7 @@ public class HibernateProductsServiceTests {
             }
         };
 
-        HibernateProductsService service = new HibernateProductsService(repo);
+        ProductsServiceImpl service = new ProductsServiceImpl(repo);
 
         // Act
 
@@ -103,7 +103,7 @@ public class HibernateProductsServiceTests {
             }
         };
 
-        HibernateProductsService service = new HibernateProductsService(repo);
+        ProductsServiceImpl service = new ProductsServiceImpl(repo);
 
         Product product = new Product();
         product.setName("aa");
@@ -114,6 +114,7 @@ public class HibernateProductsServiceTests {
 
     @Test
     public void create_whenProductIsValid_expectToHasId() {
+        int id = 1;
         GenericRepository<Product> repo = new GenericRepository<Product>() {
             @Override
             public List<Product> getAll() {
@@ -127,12 +128,12 @@ public class HibernateProductsServiceTests {
 
             @Override
             public Product create(Product entity) {
-                entity.setId(1);
+                entity.setId(id);
                 return entity;
             }
         };
 
-        HibernateProductsService service = new HibernateProductsService(repo);
+        ProductsServiceImpl service = new ProductsServiceImpl(repo);
 
         Product product = new Product();
         product.setName("aaaa");
@@ -142,6 +143,6 @@ public class HibernateProductsServiceTests {
 
         // Assert
 
-        Assert.assertEquals(product.getId(), 1);
+        Assert.assertEquals(id, product.getId());
     }
 }
